@@ -6,17 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'LocationDetailsScreen.dart';
-
+List<File> photos ;
 class MerchantDetailsScreen extends StatefulWidget {
-  List<File> photos = [null];
-
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return MerchantDetailsState();
   }
 }
-
 class MerchantDetailsState extends State<MerchantDetailsScreen> {
   TextEditingController merchantTypeController = TextEditingController();
   TextEditingController categoryController = TextEditingController();
@@ -24,19 +21,21 @@ class MerchantDetailsState extends State<MerchantDetailsScreen> {
   TextEditingController closeTimeController = TextEditingController();
 
 //  MyList myList=MyList();
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
   bool isIOS;
+  @override
+  void initState() {
+   photos=[null];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     isIOS = Theme.of(context).platform == TargetPlatform.iOS;
 
-    // widget.photos.add(ChildWidget());
-    print("photo:LLL0" + widget.photos.length.toString());
+    // photos.add(ChildWidget());
+    print("photo:LLL0" + photos.length.toString());
     return Scaffold(
-      key: _scaffoldKey,
+
       body: Container(
         height: double.infinity,
         child: SingleChildScrollView(
@@ -146,7 +145,8 @@ class MerchantDetailsState extends State<MerchantDetailsScreen> {
                       child: Stack(
                         children: <Widget>[
 
-                          Image.file(widget.photos[pos],height: 133,width: 101,),
+
+                          Image.file(photos[pos],height: 133,width: 101,),
 
 
                            Container(
@@ -157,22 +157,18 @@ class MerchantDetailsState extends State<MerchantDetailsScreen> {
                               child: Container(
                                 height: 30,
                                 width: 30,
-
                                 color: AppColors.backgoundColorRed,
                                 child: Icon(Icons.close,color: Colors.white,),
                               ),
                               ),
                            )
-
-
-
                         ],
                       ),
 
                       ),
                       );
                     },
-                    itemCount: widget.photos.length,
+                    itemCount: photos.length,
                     separatorBuilder: (context, pos) => SizedBox(
                       width: 10,
                     ),
@@ -598,11 +594,11 @@ class MerchantDetailsState extends State<MerchantDetailsScreen> {
   }
 
   addNewImage(image) {
-    print("photoLen:" + widget.photos.length.toString());
+    print("photoLen:" + photos.length.toString());
     //photos.add(ddt);
     setState(() {
 
-      widget.photos.add(image);
+      photos.add(image);
 
     });
 
@@ -610,11 +606,13 @@ class MerchantDetailsState extends State<MerchantDetailsScreen> {
 
   removeListIteam(int pos) {
     setState(() {
-      widget.photos.removeAt(pos);
+      photos.removeAt(pos);
     });
 
 
   }
+
+
 }
 
 
