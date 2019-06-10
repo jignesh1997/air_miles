@@ -35,7 +35,6 @@ class MerchantDetailsState extends State<MerchantDetailsScreen> {
     // photos.add(ChildWidget());
     print("photo:LLL0" + photos.length.toString());
     return Scaffold(
-
       body: Container(
         height: double.infinity,
         child: SingleChildScrollView(
