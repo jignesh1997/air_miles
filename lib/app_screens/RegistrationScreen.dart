@@ -41,7 +41,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                 duration: Duration(seconds: 1),
               ));
         }
-      });
+      });}
       return Scaffold(
           key: _scaffoldKey,
           body: BlocBuilder(
@@ -240,5 +240,5 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                     ));
               }));
     }
-  }
+
 }
