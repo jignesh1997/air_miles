@@ -37,6 +37,9 @@ class GetLocationStated extends State<GetLocationStateWidget>{
   Location location;
   Map<String,double> currentLocation;
   //Geolocator geolocator = Geolocator();
+  //Map<dynamic, dynamic> map = snapshot.data.snapshot.value;
+
+ // map.values.toList()[index]["pic"]
 
   //Position userLocation;
   bool firstTime=true;
@@ -59,10 +62,7 @@ class GetLocationStated extends State<GetLocationStateWidget>{
                       onMapCreated: (GoogleMapController controller) {
                         _mapcontroller = controller;
                         _getLocation();
-
                       },
-
-
                       onCameraMove: (position) => {_position = position},
                       onCameraIdle: () => UpdateDateOnCamaraMove(),
                       initialCameraPosition: CameraPosition(

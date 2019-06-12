@@ -149,7 +149,6 @@ class MyAccount extends StatelessWidget {
                               onPressed: () => {
                                 Navigator.push(context,MaterialPageRoute(builder: (context)=>MerchantDetailsScreen()))
 
-
                               },
                               backgroundColor: AppColors.backgoundColorRed,
                               child: Icon(
@@ -162,8 +161,6 @@ class MyAccount extends StatelessWidget {
               ),
             ),
             Container(
-
-
 
             )
 

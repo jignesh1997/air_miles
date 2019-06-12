@@ -4,6 +4,7 @@ import 'package:air_miles/Colors.dart';
 import 'package:air_miles/Utils.dart';
 import 'package:air_miles/bloc/registration/RegistrationState.dart';
 import 'package:air_miles/bloc/registration/RegistartionEvent.dart';
+import 'package:air_miles/FirebaseDataBaseHelper.dart';
 
 import 'package:air_miles/app_screens/home_screen/MainPage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,22 +25,33 @@ class RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController countryCode = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final FocusNode _nameNode=FocusNode();
+  final FocusNode _emailNode=FocusNode();
+  final FocusNode _passwordNode=FocusNode();
+  final FocusNode _mobileNode=FocusNode();
+  final FocusNode _confirmPasswordNode=FocusNode();
   double rLMargin;
 
   @override
   Widget build(BuildContext context) {
     rLMargin = Utils.getRightLeftMargin(context, 9);
-    _showSnakbar(String msg) {
+    _showSnakbar(String msg,{bool isError=true}) {
       Future.delayed(const Duration(milliseconds: 2), () {
         if (_bloc.currentState.error == null) {
           Utils.submitDialog(context);
+          //insert user
+          FirebaseDataBaseHelper.insertUser(_bloc.currentState.fullname, _bloc.currentState.email,
+              _bloc.currentState.mobile, _bloc.currentState.password).whenComplete(()=>{
+                Navigator.pop(context),
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>MainPage()))
+
+          });
+
+
         }
         else {
-          _scaffoldKey.currentState.showSnackBar(
-              SnackBar(
-                content: Text(_bloc.currentState.error),
-                duration: Duration(seconds: 1),
-              ));
+
+          Utils.showSnakBar(_bloc.currentState.error, _scaffoldKey);
         }
       });}
       return Scaffold(
@@ -47,6 +59,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
           body: BlocBuilder(
               bloc: _bloc,
               builder: (BuildContext context, RegistrationState state) {
+               
                 return Container(
                     height: double.infinity,
                     child: SingleChildScrollView(
@@ -75,7 +88,13 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                           Container(
                               margin: EdgeInsets.only(
                                   left: rLMargin, top: 25, right: rLMargin),
-                              child: TextField(
+                              child: TextFormField(
+                                onFieldSubmitted: (term){
+                                  Utils.fieldFocusChange(context, _nameNode, _emailNode);
+                                },
+                                focusNode: _nameNode,
+
+                                textInputAction: TextInputAction.next,
                                 controller: fullname,
                                 style: TextStyle(fontSize: 14),
                                 cursorColor: AppColors.gray,
@@ -96,7 +115,12 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                               margin: EdgeInsets.only(
 
                                   left: rLMargin, top: 25, right: rLMargin),
-                              child: TextField(
+                              child: TextFormField(
+                                onFieldSubmitted: (term){
+                                  Utils.fieldFocusChange(context, _emailNode, _mobileNode);
+                                },
+                                focusNode: _emailNode,
+                                textInputAction: TextInputAction.next,
                                 controller: email,
                                 style: TextStyle(fontSize: 14),
                                 cursorColor: AppColors.gray,
@@ -116,8 +140,15 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                           Container(
                               margin: EdgeInsets.only(
                                   left: rLMargin, top: 25, right: rLMargin),
-                              child: TextField(
+                              child: TextFormField(
+                                onFieldSubmitted: (term){
+                                  Utils.fieldFocusChange(context, _mobileNode, _passwordNode);
+
+                                },
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.number,
                                 controller: mobile,
+                                focusNode: _mobileNode,
                                 style: TextStyle(fontSize: 14),
                                 cursorColor: AppColors.gray,
                                 decoration: InputDecoration(
@@ -136,8 +167,14 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                           Container(
                               margin: EdgeInsets.only(
                                   left: rLMargin, top: 25, right: rLMargin),
-                              child: TextField(
+                              child: TextFormField(
+                                onFieldSubmitted: (term){
+                                  Utils.fieldFocusChange(context, _passwordNode, _confirmPasswordNode);
+                                },
+                                focusNode: _passwordNode,
+
                                 controller: password,
+                                textInputAction: TextInputAction.next,
                                 style: TextStyle(fontSize: 14),
                                 obscureText: true,
                                 cursorColor: AppColors.gray,
@@ -157,7 +194,12 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                           Container(
                               margin: EdgeInsets.only(
                                   left: rLMargin, top: 25, right: rLMargin),
-                              child: TextField(
+                              child: TextFormField(
+                                onFieldSubmitted: (term){
+                                  //Utils._fieldFocusChange(context, currentFocus, nextFocus)
+                                },
+                                focusNode: _confirmPasswordNode,
+                                textInputAction: TextInputAction.done,
                                 controller: confirmPassword,
                                 style: TextStyle(fontSize: 14),
                                 obscureText: true,
@@ -181,6 +223,8 @@ class RegistrationScreenState extends State<RegistrationScreen> {
                               child: SizedBox(
                                 width: double.infinity,
                                 child: RaisedButton(
+
+
                                   onPressed: () =>
                                   {
                                     _bloc.dispatch(

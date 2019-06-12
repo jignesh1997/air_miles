@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "128131592920",
+    "firebase_url": "https://air-miles-1557407689179.firebaseio.com",
+    "project_id": "air-miles-1557407689179",
+    "storage_bucket": "air-miles-1557407689179.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128131592920:android:5e9d4ca130f5c866",
+        "android_client_info": {
+          "package_name": "com.aladin.yudiz.air_miles"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "128131592920-kti4gthsavbesainj7rubstl84dgidef.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aladin.yudiz.air_miles",
+            "certificate_hash": "185a127a3d82d072e8d2fdc535c8b74447057adb"
+          }
+        },
+        {
+          "client_id": "128131592920-n164v919qnmkj1s35nc49jce5ufkrkmr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmgHJ6DhJ2Vy9ZCKJz8kJxmiwTA7TD5-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "128131592920-n164v919qnmkj1s35nc49jce5ufkrkmr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -11,6 +11,7 @@ class Errors{
   static final String VALID_phone="Please valid phone number";
   static final String VALID_password="Please enter valid Password";
   static final String PASSWORD_NOT_Match="password word does not match";
+  static final String ENTER_CORRECT_EMAIL_PASSWORD="Invalid Email or Password";
 
 }
 

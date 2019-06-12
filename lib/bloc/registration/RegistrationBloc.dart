@@ -32,8 +32,12 @@ class RegistrationBloc extends Bloc<RegistartionEvent,RegistrationState>{
     if(!Utils.isPhoneNumber(event.mobile)){
       return Errors.VALID_phone;
     }
+
     if(event.password.isEmpty){
       return Errors.Empty_password;
+    }
+    if(!Utils.isValidPassword(event.password)){
+      return Errors.VALID_password;
     }
     if(event.confirmPassword.isEmpty){
       return Errors.Empty_confirm_password;

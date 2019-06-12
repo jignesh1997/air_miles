@@ -7,6 +7,7 @@ import 'package:air_miles/Utils.dart';
 import 'package:air_miles/bloc/login/LoginBloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:air_miles/bloc/login/LoginState.dart';
+import 'package:air_miles/FirebaseDataBaseHelper.dart';
 import 'package:air_miles/bloc/login/LoginEvent.dart';
 import 'package:air_miles/app_screens/home_screen/MainPage.dart';
 final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -37,6 +38,8 @@ class LoginScreenState extends State<LoginScreenStatefull>{
   final email = TextEditingController();
   final password = TextEditingController();
   final _loginBloc=LoginBloc();
+  final _emailNode=FocusNode();
+  final _passowordNode=FocusNode();
 
   double rLMargin;
   @override
@@ -51,16 +54,22 @@ class LoginScreenState extends State<LoginScreenStatefull>{
 
         if(_loginBloc.currentState.error==null ){
          Utils.submitDialog(context);
+         var subject=FirebaseDataBaseHelper.checkCredentails(_loginBloc.currentState.email, _loginBloc.currentState.password);
+        subject.stream.listen((data){
+          if(data==true){
+            Navigator.pop(context);
+            Navigator.push(context,MaterialPageRoute(builder: (context)=>MainPage()));
+          }
+
+        },onError: (error){
+           Navigator.pop(context);
+          Utils.showSnakBar(error, _scaffoldKey);
+        });
         }
         else{
-          _scaffoldKey.currentState.showSnackBar(
-              SnackBar(
-                content: Text(_loginBloc.currentState.error),
-                duration: Duration(seconds: 1),
-              ));
+          Utils.showSnakBar(_loginBloc.currentState.error, _scaffoldKey);
         }
       });
-
     }
     void _showDialog() {
       // flutter defined function
@@ -113,7 +122,13 @@ class LoginScreenState extends State<LoginScreenStatefull>{
                 Container(
                     margin:
                     EdgeInsets.only(left: rLMargin, top: 20, right: rLMargin),
-                    child: TextField(
+                    child: TextFormField(
+                      textInputAction: TextInputAction.next,
+                      focusNode: _emailNode,
+                      onFieldSubmitted: (term){
+                        Utils.fieldFocusChange(context, _emailNode, _passowordNode);
+                      },
+                      
                       cursorColor: AppColors.gray,
                       decoration: InputDecoration(
                           labelText: "Email ID",
@@ -131,7 +146,8 @@ class LoginScreenState extends State<LoginScreenStatefull>{
                 Container(
                     margin:
                     EdgeInsets.only(left: rLMargin, top: 20, right: rLMargin),
-                    child: TextField(
+                    child: TextFormField(
+                      focusNode: _passowordNode,
                       cursorColor: AppColors.gray,
                       obscureText: true,
                       controller: password,

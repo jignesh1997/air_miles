@@ -3,6 +3,8 @@ class AppColors{
   static  Color backgoundColorgray=HexColor("F5F5F7");
   static  Color backgoundColorRed=HexColor("FF1654");
   static  Color backgoundColorDrakgray=HexColor("E7E7EA");
+  static  Color snakBarErrorColor=backgoundColorRed;
+  static  Color snakBarSuccessColor=Colors.green;
 
   static  Color gray=HexColor("ABB4BD");
 }

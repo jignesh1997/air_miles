@@ -8,5 +8,6 @@ abstract class LoginEvents extends Equatable {
 class LoginSubmit extends LoginEvents {
   final String email;
   final String password;
+
   LoginSubmit(@required this.email, @required this.password):super([email,password]);
 }

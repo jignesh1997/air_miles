@@ -20,6 +20,14 @@ class Utils{
   static bool isPhoneNumber(String phone){
     return (phone.length>5 && phone.length<=15);
   }
+  static showSnakBar(String msg,scaffoldKey,{bool error=true}){
+    scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          backgroundColor: (error)?AppColors.snakBarErrorColor:AppColors.snakBarSuccessColor,
+          content: Text(msg),
+          duration: Duration(seconds: 2),
+        ));
+  }
   static Future<Null> submitDialog(BuildContext context) async {
     return await showDialog<Null>(
         context: context,
@@ -40,6 +48,11 @@ class Utils{
             ],
           );
         });
-
   }
+  static fieldFocusChange(BuildContext context, FocusNode currentFocus,FocusNode nextFocus) {
+    currentFocus.unfocus();
+    FocusScope.of(context).requestFocus(nextFocus);
+  }
+
+
 }

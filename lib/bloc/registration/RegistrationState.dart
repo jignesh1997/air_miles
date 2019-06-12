@@ -27,7 +27,7 @@ class RegistrationState extends Equatable{
     @required password,
     @required confirmPassword,
     @required error,}){
-    return RegistrationState(fullname: fullname,email: email,password: password,confirmPassword: confirmPassword,error: error);
+    return RegistrationState(fullname: fullname,email: email,mobile: mobile,password: password,confirmPassword: confirmPassword,error: error);
   }
   @override
   String toString() {
